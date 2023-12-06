@@ -22,7 +22,7 @@ class Menu extends HTMLElement {
                         <div class="dropdown-menu" aria-labelledby="authDropdown">
                             <a class="dropdown-item" href="login.html">Login</a>
                             <a class="dropdown-item" href="signup.html">Sign Up</a>
-                            <a class="dropdown-item" onclick="logout()">Log Out</a>
+                            <a class="dropdown-item" onclick="salir()">Log Out</a>
                         </div>
                     </div>
                 </li>

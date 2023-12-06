@@ -18,6 +18,7 @@ btnInsUser.addEventListener('click', function () {
                 "email": user.email
             }).then(function (docRef) {
                 alert("User added successfully");
+                document.location.href = 'login.html';
             }).catch(function (FirebaseError) {
                 alert("Error al registrar datos del usuario." + FirebaseError);
             });

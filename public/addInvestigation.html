@@ -22,6 +22,8 @@
             crossorigin="anonymous"
         />
 
+        <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
         <script defer src="js/user/isLogin.js"></script>
 
         <title>Investigations</title>
@@ -38,18 +40,23 @@
             <div class="container mt-5">
                 <form id="researchForm">
                     <div class="mb-3">
-                        <label for="projectID" class="form-label">Project ID</label>
-                        <input type="text" class="form-control" id="projectID" required />
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="researchTitle" class="form-label">Research Title</label>
+                        <label for="researchTitle" class="form-label">Title</label>
                         <input type="text" class="form-control" id="researchTitle" required />
                     </div>
 
                     <div class="mb-3">
                         <label for="areaOfInterest" class="form-label">Area of Interest</label>
                         <input type="text" class="form-control" id="areaOfInterest" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="studentId" class="form-label">Student</label>
+                        <input type="number" class="form-control" id="studentId" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="schoolGrade" class="form-label">School Grade</label>
+                        <input type="text" class="form-control" id="schoolGrade" required />
                     </div>
 
                     <div class="mb-3">
@@ -60,6 +67,11 @@
                     <div class="mb-3">
                         <label for="pdfFile" class="form-label">Upload PDF</label>
                         <input type="file" class="form-control" id="pdfFile" accept=".pdf" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="images" class="form-label">Upload Images</label>
+                        <input type="file" class="form-control" id="images" required />
                     </div>
 
                     <div class="mb-3">
