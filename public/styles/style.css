@@ -1,0 +1,129 @@
+.navbar {
+    background: linear-gradient(to right, #007bb5, #00a8ff, #00a8ff, #007bb5, #0d2d6d);
+    position: fixed;
+    width: 100%;
+    height: 15%;
+    z-index: 1000;
+}
+
+.navbar-brand img {
+    filter: brightness(0) invert(1);
+}
+
+.navbar-toggler-icon {
+    background-color: #fff;
+}
+
+.navbar-nav .nav-link {
+    color: #fff !important;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffa500 !important;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    color: #011d42;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    padding-top: 60px;
+}
+
+.footer-container {
+    background: linear-gradient(to right, #00a8ff, #007bb5, #0d2d6d, #007bb5, #00a8ff);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+}
+
+.footer-section {
+    flex: 1;
+}
+
+.social-icon {
+    color: #fff;
+    margin-right: 10px;
+}
+
+.footer-section a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding-top: 100px;
+}
+img {
+    padding-left: 60px;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-form {
+    width: 400px;
+    padding: 40px;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form h2 {
+    color: #343a40;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    height: 40px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+/* styles.css */
+
+h2 {
+    color: #333; /* Cambia el color del texto según tu preferencia */
+    font-size: 24px; /* Ajusta el tamaño del texto según tu preferencia */
+    text-align: center; /* Centra el texto */
+    margin-top: 20px; /* Ajusta el margen superior según tu preferencia */
+}
+
+#carouselExampleInterval {
+    max-width: 800px; /* Ajusta el ancho máximo del carrusel según tu preferencia */
+    margin: 0 auto; /* Centra el carrusel en la página */
+}
+
+.carousel-inner img {
+    width: 100%; /* Ajusta el ancho de las imágenes al 100% del contenedor */
+    height: auto; /* Hace que la altura se ajuste automáticamente para mantener la proporción */
+}

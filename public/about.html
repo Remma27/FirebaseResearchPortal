@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="styles/index.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <script src="sections/menu.js" defer></script>
+    <script src="sections/footer.js" defer></script>
+    <script defer src="/__/firebase/10.5.2/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/10.5.2/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/10.5.2/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/10.5.2/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/10.5.2/firebase-storage-compat.js"></script>
+
+    <script defer src="/__/firebase/init.js"></script>
+    <script defer src="js/user/isLogin.js"></script>
+
+    <script src="https://kit.fontawesome.com/2c7bfef965.js" crossorigin="anonymous"></script>
+
+    <title>About Us</title>
+</head>
+
+<body class="bg-gray-100">
+    <header>
+        <menu-component></menu-component>
+    </header>
+
+    <main class="content">
+        <div class="container mx-auto my-12 p-8 bg-white shadow-lg rounded-lg">
+            
+            <p class="text-gray-700 leading-loose mb-8">
+                Explore a world of knowledge on our research-focused university platform. Each contribution propels progress, linking curious minds globally. <br> Join us to explore, collaborate, and amplify the boundless potential of research together.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="team-member">
+                    <img src="images/emma.jpeg" alt="Team Member 1">
+                    <div class="text-center">
+                        <p class="text-xl font-semibold mb-2">Emmanuel Rodríguez Solano</p>
+                        <ul class="text-gray-600 list-disc">
+                            <li>Determine database and its rules</li>
+                            <li>Project authentication</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <img src="images/jose.jpg" alt="Team Member 2">
+                    <div class="text-center">
+                        <p class="text-xl font-semibold mb-2">Jose Nuñez Guerrero</p>
+                        <ul class="text-gray-600 list-disc">
+                            <li>Screen to display research works</li>
+                            <li>Screen to display a selected work</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="team-member ">
+                    <img src="images/will.jpg" alt="Team Member 3">
+                    <div class="text-center">
+                        <p class="text-xl font-semibold mb-2">William Delgado Vargas</p>
+                        <ul class="text-gray-600 list-disc">
+                            <li>Registration screen for research works</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="team-member">
+                    <img src="images/ale.jpg" alt="Team Member 4">
+                    <div>
+                        <p class="text-xl font-semibold mb-2">Alejandro Rodríguez Jaen</p>
+                        <ul class="text-gray-600 list-disc">
+                            <li>Visual area of Authentication, header, footer, and About us</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <footer-component></footer-component>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

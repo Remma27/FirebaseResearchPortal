@@ -1,0 +1,32 @@
+#projectsContainer {
+    max-width: 100%;
+    display: flex;
+    overflow-x: auto;
+}
+
+.project {
+    width: 600px;
+    margin-right: 30px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+.project > * {
+    margin-bottom: 10px;
+}
+
+#filterContainer {
+    text-align: left;
+    margin-top: 10px;
+    margin-right: 80%;
+}
+
+#areaFilter {
+    margin-right: 5px;
+}
+
+#btnFilter {
+    cursor: pointer;
+}
