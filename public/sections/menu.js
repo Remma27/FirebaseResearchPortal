@@ -14,7 +14,7 @@ class Menu extends HTMLElement {
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="index.html">Home</a>
                 </li>
-                <li class="nav-item dropdown ml-2"> <!-- Agregamos la clase ml-2 para agregar un margen a la izquierda -->
+                <li class="nav-item dropdown "> <!-- Agregamos la clase ml-2 para agregar un margen a la izquierda -->
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="authDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Authentication
@@ -26,7 +26,7 @@ class Menu extends HTMLElement {
                         </div>
                     </div>
                 </li>
-                <li class="nav-item mr-14">
+                <li class="nav-item opciones mr-16">
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="optionsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Options
