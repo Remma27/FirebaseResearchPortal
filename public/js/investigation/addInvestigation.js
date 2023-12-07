@@ -1,105 +1,112 @@
 // JavaScript Document
-var db = firebase.firestore();
-var storageRef = firebase.storage().ref();
+var db = firebase.apps[0].firestore();
+var container = firebase.apps[0].storage().ref();
 
-// Get references to form inputs
-const projectIDInput = document.querySelector('#projectID');
-const researchTitleInput = document.querySelector('#researchTitle');
-const areaOfInterestInput = document.querySelector('#areaOfInterest');
-const topicDescriptionInput = document.querySelector('#topicDescription');
-const pdfFileInput = document.querySelector('#pdfFile');
-const conclusionsInput = document.querySelector('#conclusions');
-const finalRecommendationsInput = document.querySelector('#finalRecommendations');
+const txtResearchTitle = document.querySelector('#txtResearchTitle');
+const txtAreaofInterest = document.querySelector('#txtAreaofInterest');
+const txtStudentID = document.querySelector('#txtStudentID');
+const txtSchoolGrade = document.querySelector('#txtSchoolGrade');
+const txtTopicDescription = document.querySelector('#txtTopicDescription');
+const txtPdfFile = document.querySelector('#txtPdfFile');
+const txtImages = document.querySelector('#txtImages');
+const txtConclusions = document.querySelector('#txtConclusions');
+const txtRecommendations = document.querySelector('#txtRecommendations');
 const btnSaveProject = document.querySelector('#btnSaveProject');
 
-// Add click event listener to the Save button
-btnSaveProject.addEventListener('click', function () {
-    const pdfFile = pdfFileInput.files[0];
+const form = document.querySelector('#researchForm');
 
-    // Check if a PDF file is selected
+btnSaveProject.addEventListener('click', function (event) {
+    event.preventDefault();
+
+    const pdfFile = txtPdfFile.files[0];
+    const imageFiles = txtImages.files;
+
     if (pdfFile == null) {
         alert('You must select a PDF file');
     } else {
-        // Set metadata for the PDF file
-        const metadata = {
+        const pdfMetadata = {
             contentType: pdfFile.type
-        };
+        }
 
-        // Create a reference to the 'pdfs' folder
-        var pdfsRef = storageRef.child('pdfs');
+        const pdfUpload = container.child('pdfs/' + pdfFile.name).put(pdfFile, pdfMetadata);
+        pdfUpload.then(pdfSnapshot => pdfSnapshot.ref.getDownloadURL()).then(pdfUrl => {
 
-        // Declare uploadTask variable
-        var uploadTask;
+            const imagePromises = Array.from(imageFiles).map((imageFile, index) => {
+                const imageMetadata = {
+                    contentType: imageFile.type
+                };
 
-        // Check if the 'pdfs' folder exists
-        pdfsRef.listAll().then(function (result) {
-            // If the 'pdfs' folder doesn't exist, create it
-            if (!result.items.length && !result.prefixes.length) {
-                return pdfsRef.putString('').then(function (snapshot) {
-                    console.log('Folder created successfully!');
-                });
-            } else {
-                console.log('Folder already exists.');
-                return Promise.resolve(); // Resolve the promise to proceed
-            }
-        }).then(function () {
-            // Create a reference for the PDF file in storage
-            const pdfStorageRef = storageRef.child('pdfs/' + pdfFile.name);
-
-            // Upload the PDF file to Firebase Storage
-            uploadTask = pdfStorageRef.put(pdfFile, metadata);
-
-            // Handle the upload process
-            return uploadTask.then(snapshot => snapshot.ref.getDownloadURL())
-        }).then(url => {
-            // Check if the projectID already exists
-            return checkIfProjectIDExists(projectIDInput.value).then(exists => {
-                if (exists) {
-                    alert("Project ID already exists. Please choose a different one.");
-                    return Promise.reject("Project ID already exists");
-                } else {
-                    // Generate a unique ID for the research project
-                    const projectID = db.collection("researchProjects").doc().id;
-
-                    // Save project information and PDF URL to Firestore
-                    return db.collection("researchProjects").doc(projectID).set({
-                        "projectID": projectIDInput.value,
-                        "researchTitle": researchTitleInput.value,
-                        "areaOfInterest": areaOfInterestInput.value,
-                        "topicDescription": topicDescriptionInput.value,
-                        "pdfUrl": url,
-                        "conclusions": conclusionsInput.value,
-                        "finalRecommendations": finalRecommendationsInput.value,
-                        "timestamp": firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                }
+                const imageUpload = container.child(`images/${index}_${imageFile.name}`).put(imageFile, imageMetadata);
+                return imageUpload.then(imageSnapshot => imageSnapshot.ref.getDownloadURL());
             });
-        }).then(function () {
-            // Display success message
-            alert("Research Project ID: " + projectIDInput.value);
-            clearForm();
-        }).catch(function (error) {
-            // Handle errors during project data saving or PDF upload
-            console.error("Error: " + error);
+
+            Promise.all(imagePromises).then(imageUrls => {
+
+                console.log('PDF URL:', pdfUrl);
+                console.log('Image URLs:', imageUrls);
+
+                console.log('Research Title:', txtResearchTitle.value);
+                console.log('Area of Interest:', txtAreaofInterest.value);
+
+                const studentID = txtStudentID.value;
+
+                // Verificar si el estudiante con el studentID existe
+                db.collection("students").where("studentID", "==", studentID).get()
+                    .then((querySnapshot) => {
+                        if (!querySnapshot.empty) {
+                            // Si el estudiante existe, agregar el proyecto de investigación
+                            const projectID = db.collection("researchProjects").doc().id;
+
+                            db.collection("researchProjects").doc(projectID).set({
+                                "projectID": projectID,
+                                "researchTitle": txtResearchTitle.value,
+                                "areaOfInterest": txtAreaofInterest.value,
+                                "studentID": studentID,
+                                "schoolGrade": txtSchoolGrade.value,
+                                "topicDescription": txtTopicDescription.value,
+                                "pdfUrl": pdfUrl,
+                                "images": imageUrls,
+                                "conclusions": txtConclusions.value,
+                                "finalRecommendations": txtRecommendations.value,
+                            }).then(function () {
+                                alert("Project Added Successfully" + projectID);
+                                limpiar();
+                            }).catch(function (error) {
+                                console.error("Error adding the document to Firestore:", error);
+                                alert("Error adding the document to Firestore: " + error.message);
+                            });
+                        } else {
+                            // Si el estudiante no existe, mostrar un mensaje de error
+                            alert("El estudiante con el studentID especificado no existe.");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error checking if student exists:", error);
+                        alert("Error checking if student exists: " + error.message);
+                    });
+
+            }).catch(error => {
+                alert('Error uploading images: ' + error.message);
+            });
+
+        }).catch(pdfError => {
+            alert('Error uploading PDF: ' + pdfError.message);
         });
     }
 });
 
-// Function to clear form inputs
-function clearForm() {
-    projectIDInput.value = '';
-    researchTitleInput.value = '';
-    areaOfInterestInput.value = '';
-    topicDescriptionInput.value = '';
-    pdfFileInput.value = '';
-    conclusionsInput.value = '';
-    finalRecommendationsInput.value = '';
-    projectIDInput.focus();
-}
+function limpiar() {
+    txtResearchTitle.value = '';
+    txtAreaofInterest.value = '';
+    txtStudentID.value = '';
+    txtSchoolGrade.value = '';
+    txtTopicDescription.value = '';
+    txtPdfFile.value = '';
+    txtImages.value = '';
+    txtConclusions.value = '';
+    txtRecommendations.value = '';
 
-// Function to check if a projectID already exists
-function checkIfProjectIDExists(projectID) {
-    return db.collection("researchProjects").where("projectID", "==", projectID).get().then(querySnapshot => {
-        return !querySnapshot.empty;
-    });
+    form.reset();
+
+    txtResearchTitle.focus();
 }

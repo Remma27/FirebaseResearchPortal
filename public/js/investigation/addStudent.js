@@ -8,8 +8,11 @@ const txtaboutMe = document.querySelector('#txtaboutMe');
 const txtprofilePictureURL = document.querySelector('#txtprofilePictureURL');
 const txtStudentID = document.querySelector('#txtStudentID');
 const btnSaveData = document.querySelector('#btnSaveData');
+const form = document.querySelector('#studentForm');
 
-btnSaveData.addEventListener('click', function () {
+btnSaveData.addEventListener('click', function (event) {
+    event.preventDefault();
+
     const archivo = txtprofilePictureURL.files[0];
 
     if (archivo == null) {
@@ -34,14 +37,13 @@ btnSaveData.addEventListener('click', function () {
                 alert("Student Added Successfully" + studentID);
                 limpiar();
             }).catch(function (FirebaseError) {
-                alert("Error adding the document:", FirebaseError);
+                alert("Error adding the document:" + FirebaseError.message);
             });
         }).catch(function (FirebaseError) {
-            alert("Error getting the URL of the image:", FirebaseError);
+            alert("Error getting the URL of the image:" + FirebaseError.message);
         });
     }
 });
-
 
 function limpiar() {
     txtStudentID.value = '';
@@ -49,5 +51,6 @@ function limpiar() {
     txtschoolGrade.value = '';
     txtaboutMe.value = '';
     txtprofilePictureURL.value = '';
+    form.reset();
     txtfullName.focus();
 }

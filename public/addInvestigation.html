@@ -22,10 +22,7 @@
             crossorigin="anonymous"
         />
 
-        <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.0.1/firebase-auth.js"></script>
         <script defer src="js/user/isLogin.js"></script>
-
         <title>Investigations</title>
     </head>
 
@@ -40,48 +37,48 @@
             <div class="container mt-5">
                 <form id="researchForm">
                     <div class="mb-3">
-                        <label for="researchTitle" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="researchTitle" required />
+                        <label for="txtResearchTitle" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="txtResearchTitle" required />
                     </div>
 
                     <div class="mb-3">
-                        <label for="areaOfInterest" class="form-label">Area of Interest</label>
-                        <input type="text" class="form-control" id="areaOfInterest" required />
+                        <label for="txtAreaofInterest" class="form-label">Area of Interest</label>
+                        <input type="text" class="form-control" id="txtAreaofInterest" required />
                     </div>
 
                     <div class="mb-3">
-                        <label for="studentId" class="form-label">Student</label>
-                        <input type="number" class="form-control" id="studentId" required />
+                        <label for="txtStudentID" class="form-label">Student</label>
+                        <input type="text" class="form-control" id="txtStudentID" required />
                     </div>
 
                     <div class="mb-3">
-                        <label for="schoolGrade" class="form-label">School Grade</label>
-                        <input type="text" class="form-control" id="schoolGrade" required />
+                        <label for="txtSchoolGrade" class="form-label">School Grade</label>
+                        <input type="text" class="form-control" id="txtSchoolGrade" required />
                     </div>
 
                     <div class="mb-3">
-                        <label for="topicDescription" class="form-label">Topic Description</label>
-                        <textarea class="form-control" id="topicDescription" rows="3" required></textarea>
+                        <label for="txtTopicDescription" class="form-label">Topic Description</label>
+                        <textarea class="form-control" id="txtTopicDescription" rows="3" required></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="pdfFile" class="form-label">Upload PDF</label>
-                        <input type="file" class="form-control" id="pdfFile" accept=".pdf" required />
+                        <label for="txtPdfFile" class="form-label">Upload PDF</label>
+                        <input type="file" class="form-control" id="txtPdfFile" accept=".pdf" required />
                     </div>
 
                     <div class="mb-3">
-                        <label for="images" class="form-label">Upload Images</label>
-                        <input type="file" class="form-control" id="images" required />
+                        <label for="txtImages" class="form-label">Upload Images</label>
+                        <input type="file" class="form-control" id="txtImages" accept="image/*" multiple required />
                     </div>
 
                     <div class="mb-3">
-                        <label for="conclusions" class="form-label">Conclusions</label>
-                        <textarea class="form-control" id="conclusions" rows="3" required></textarea>
+                        <label for="txtConclusions" class="form-label">Conclusions</label>
+                        <textarea class="form-control" id="txtConclusions" rows="3" required></textarea>
                     </div>
 
                     <div class="mb-3">
-                        <label for="finalRecommendations" class="form-label">Final Recommendations</label>
-                        <textarea class="form-control" id="finalRecommendations" rows="3" required></textarea>
+                        <label for="txtRecommendations" class="form-label">Final Recommendations</label>
+                        <textarea class="form-control" id="txtRecommendations" rows="3" required></textarea>
                     </div>
 
                     <button id="btnSaveProject" type="button" class="btn btn-primary">Save and Upload</button>
