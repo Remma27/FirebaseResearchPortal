@@ -50,11 +50,9 @@ btnSaveProject.addEventListener('click', function (event) {
 
                 const studentID = txtStudentID.value;
 
-                // Verificar si el estudiante con el studentID existe
                 db.collection("students").where("studentID", "==", studentID).get()
                     .then((querySnapshot) => {
                         if (!querySnapshot.empty) {
-                            // Si el estudiante existe, agregar el proyecto de investigación
                             const projectID = db.collection("researchProjects").doc().id;
 
                             db.collection("researchProjects").doc(projectID).set({
@@ -76,8 +74,7 @@ btnSaveProject.addEventListener('click', function (event) {
                                 alert("Error adding the document to Firestore: " + error.message);
                             });
                         } else {
-                            // Si el estudiante no existe, mostrar un mensaje de error
-                            alert("El estudiante con el studentID especificado no existe.");
+                            alert("The student with the specified studentID does not exist.");
                         }
                     })
                     .catch((error) => {
