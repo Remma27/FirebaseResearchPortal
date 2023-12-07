@@ -15,7 +15,7 @@ class Footer extends HTMLElement {
                 <div class="footer-section">
                     Platform for uploading research papers<br/>
                     for the National Technical University!<br/>
-                    © 2015 NTU All Rights Reserved
+                    © 2015 UTN All Rights Reserved
                 </div>
 
                 <div class="footer-section">
