@@ -33,18 +33,26 @@ service cloud.firestore {
     // Comments Collection Rules
     match /comments/{commentId} {
       allow read: if true;
-      allow create: if request.resource.data.commentID is string &&
-                       request.resource.data.projectID is string &&
-                       request.resource.data.uid is string &&
-                       request.resource.data.comment is string &&
-                       request.resource.data.rating >= 1 &&
-                       request.resource.data.rating <= 5 &&
-                       'timestamp' in request.resource.data;
+      allow create: if request.auth.uid != null &&
+                     request.resource.data.commentID is string &&
+                     request.resource.data.comment is string &&
+                     request.resource.data.rating >= 1 &&
+                     request.resource.data.rating <= 5 &&
+                     'timestamp' in request.resource.data &&
+                     exists(/databases/$(database)/documents/datosUsuarios/$(request.auth.uid));
       allow update: if request.auth.uid == resource.data.uid;
       allow delete: if false;
+      allow create: if request.auth.uid != null &&
+                     request.resource.data.commentID is string &&
+                     request.resource.data.comment is string &&
+                     request.resource.data.rating >= 1 &&
+                     request.resource.data.rating <= 5 &&
+                     'timestamp' in request.resource.data &&
+                     exists(/databases/$(database)/documents/datosUsuarios/$(request.auth.uid)) &&
+                     !exists(/databases/$(database)/documents/comments/$(request.resource.data.commentID));
+    }
     match /{document=**} {
       allow read, write: if true;
     }
   }
-}
 }
