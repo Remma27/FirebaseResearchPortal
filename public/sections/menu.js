@@ -33,8 +33,7 @@ class Menu extends HTMLElement {
                         </a>
                         <div class="dropdown-menu" aria-labelledby="optionsDropdown">
                             <a class="dropdown-item" href="addInvestigation.html">Add Project</a>
-                            <a class="dropdown-item" href="researchWork.html">Investigations</a>
-                            <a class="dropdown-item" href="showInvestigation.html">Search Project</a>
+                            <a class="dropdown-item" href="researchWork.html">Researchs</a>
                             <a class="dropdown-item" href="student.html">Add Student</a>
                         </div>
                     </div>
