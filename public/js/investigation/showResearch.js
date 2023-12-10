@@ -1,4 +1,3 @@
-
 //Javascript document
 
 var researchProjectsRef = firebase.firestore().collection("researchProjects");
@@ -22,14 +21,14 @@ function showProjectsByArea() {
     researchProjectsRef
         .where('areaOfInterest', '==', areaValue)
         .get()
-        .then(function(querySnapshot) {
+        .then(function (querySnapshot) {
             console.log("Query Snapshot:", querySnapshot.docs);
-            querySnapshot.forEach(function(doc) {
+            querySnapshot.forEach(function (doc) {
                 var projectDiv = createProjectDiv(doc);
                 projectsContainer.appendChild(projectDiv);
             });
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error("Error getting projects: ", error);
         });
 }
@@ -50,59 +49,66 @@ function showProjectsBySchoolGrade() {
     researchProjectsRef
         .where('schoolGrade', '==', schoolGradeValue)
         .get()
-        .then(function(querySnapshot) {
+        .then(function (querySnapshot) {
             console.log("Query Snapshot:", querySnapshot.docs);
-            querySnapshot.forEach(function(doc) {
+            querySnapshot.forEach(function (doc) {
                 var projectDiv = createProjectDiv(doc);
                 projectsContainer.appendChild(projectDiv);
             });
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error("Error getting projects: ", error);
         });
 }
 
-// New evets for each input
+// New events for each input
 areaInput.addEventListener('input', showProjectsByArea);
 schoolGradeInput.addEventListener('input', showProjectsBySchoolGrade);
-
 
 function showAllProjects() {
     researchProjectsRef
         .get()
-        .then(function(querySnapshot) {
-            querySnapshot.forEach(function(doc) {
+        .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
                 var projectDiv = document.createElement('div');
                 projectDiv.classList.add('project');
 
                 var projectTitle = document.createElement('h3');
                 projectTitle.textContent = doc.data().researchTitle;
 
-                var projectAuthor = document.createElement('div');
-                projectAuthor.innerHTML = '<strong>Author:</strong> ' + doc.data().studentID;
+                // Llamada asíncrona a studentName
+                studentName(doc).then(function (studentName) {
+                    var projectAuthor = document.createElement('div');
+                    projectAuthor.innerHTML = '<strong>Author:</strong> ' + studentName;
 
-                projectDiv.appendChild(projectTitle);
-                projectDiv.appendChild(projectAuthor);
+                    projectDiv.appendChild(projectTitle);
+                    projectDiv.appendChild(projectAuthor);
 
-                var projectAreaOfInterest = document.createElement('div');
-                projectAreaOfInterest.innerHTML = '<strong>Area of interest:</strong> ' + doc.data().areaOfInterest;
+                    var projectAreaOfInterest = document.createElement('div');
+                    projectAreaOfInterest.innerHTML = '<strong>Area of interest:</strong> ' + doc.data().areaOfInterest;
 
-                projectDiv.appendChild(projectAreaOfInterest);
+                    projectDiv.appendChild(projectAreaOfInterest);
 
-                var viewMoreButton = document.createElement('a');
-                viewMoreButton.textContent = 'Show more';
-                viewMoreButton.href = 'researchDetails.html?id=' + doc.id; 
-                projectDiv.appendChild(viewMoreButton);
+                    var schoolGrade = document.createElement('div');
+                    schoolGrade.innerHTML = '<strong>School Grade:</strong> ' + doc.data().schoolGrade;
 
-                projectsContainer.appendChild(projectDiv);
+                    projectDiv.appendChild(schoolGrade);
+
+                    var viewMoreButton = document.createElement('a');
+                    viewMoreButton.textContent = 'Show more';
+                    viewMoreButton.href = 'researchDetails.html?id=' + doc.id;
+                    projectDiv.appendChild(viewMoreButton);
+
+                    projectsContainer.appendChild(projectDiv);
+                });
             });
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.error("Error getting projects: ", error);
         });
 }
 
-//Get the firebase data
+// Get the firebase data
 function createProjectDiv(doc) {
     var projectDiv = document.createElement('div');
     projectDiv.classList.add('project');
@@ -111,7 +117,7 @@ function createProjectDiv(doc) {
     projectTitle.textContent = doc.data().researchTitle;
 
     var projectAuthor = document.createElement('div');
-    projectAuthor.innerHTML = '<strong>Author:</strong> ' + doc.data().studentID;
+    projectAuthor.innerHTML = '<strong>Author:</strong> ' + studentName(doc);
 
     var projectAreaOfInterest = document.createElement('div');
     projectAreaOfInterest.innerHTML = '<strong>Area of interest:</strong> ' + doc.data().areaOfInterest;
@@ -126,6 +132,33 @@ function createProjectDiv(doc) {
     projectDiv.appendChild(viewMoreButton);
 
     return projectDiv;
+}
+
+const db = firebase.firestore();
+function studentName(doc) {
+    return new Promise(function (resolve, reject) {
+        //Student information
+        var studentID = doc.data().studentID;
+        if (studentID) {
+            db.collection("students").where("studentID", "==", studentID).get().then(function (querySnapshot) {
+                if (!querySnapshot.empty) {
+                    // Si hay resultados, asumiremos que solo hay uno, ya que studentID debería ser único
+                    var studentDoc = querySnapshot.docs[0];
+                    var studentData = studentDoc.data();
+                    var studentName = studentData.fullName;
+                    resolve(studentName);
+                } else {
+                    console.log("No student document found for studentID:", studentID);
+                    reject("No student document found");
+                }
+            }).catch(function (error) {
+                console.error("Error getting student data for studentID", studentID, ":", error);
+                reject(error);
+            });
+        } else {
+            reject("No studentID found in project document");
+        }
+    });
 }
 
 // Show all projects on page load

@@ -4,14 +4,14 @@ var db = firebase.firestore();
 // Get the project ID from the URL
 var urlParams = new URLSearchParams(window.location.search);
 var projectID = urlParams.get('id');
-var currentUserID;  
+var currentUserID;
 
 // Function to load investigation details
 function loadInvestigationDetails() {
     var projectDetailsContainer = document.getElementById("projectDetails");
 
     //Get the ID of the authenticated user
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             currentUserID = user.uid;
         } else {
@@ -44,8 +44,7 @@ function continueLoadInvestigationDetails() {
 
             projectTitleElement.textContent = projectData.researchTitle;
             projectAreaOfInterestElement.innerHTML = '<strong>Area of Interest:</strong> ' + projectData.areaOfInterest;
-            projectStudentIDElement.innerHTML = '<strong>Student ID:</strong> ' + projectData.studentID;
-            projectSchoolGradeElement.innerHTML = '<strong>School Grade:</strong> ' + projectData.schoolGrade;
+            projectSchoolGradeElement.innerHTML = '<strong>Investigation School Grade:</strong> ' + projectData.schoolGrade;
             projectTopicDescriptionElement.innerHTML = '<strong>Topic Description:</strong> ' + projectData.topicDescription;
             projectPdfUrlElement.innerHTML = '<a href="' + projectData.pdfUrl + '" target="_blank"><strong>Click to view the PDF file</strong></a>';
 
@@ -53,28 +52,33 @@ function continueLoadInvestigationDetails() {
             projectConclusionsElement.innerHTML = '<strong>Conclusions:</strong> ' + projectData.conclusions;
             projectFinalRecommendationsElement.innerHTML = '<strong>Final Recommendations:</strong> ' + projectData.finalRecommendations;
 
-            // Get author information based on studentID
+            //Student information
             var studentID = projectData.studentID;
             if (studentID) {
-                db.collection("students").doc(studentID).get().then(function (studentDoc) {
-                    if (studentDoc.exists) {
+                db.collection("students").where("studentID", "==", studentID).get().then(function (querySnapshot) {
+                    if (!querySnapshot.empty) {
+                        // Si hay resultados, asumiremos que solo hay uno, ya que studentID debería ser único
+                        var studentDoc = querySnapshot.docs[0];
                         var studentData = studentDoc.data();
 
                         // Show author information
                         var authorNameElement = document.getElementById("authorName");
                         var authorAboutMeElement = document.getElementById("authorAboutMe");
                         var authorProfilePictureElement = document.getElementById("authorProfilePicture");
+                        var authorSchoolGradeElement = document.getElementById("authorSchoolGrade");
 
-                        authorNameElement.innerHTML = '<strong>Author:</strong> ' + studentData.fullName;
+                        authorNameElement.innerHTML = '<strong>Author Name:</strong> ' + studentData.fullName;
                         authorAboutMeElement.innerHTML = '<strong>About Me:</strong> ' + studentData.aboutMe;
-                        authorProfilePictureElement.innerHTML = '<img src="' + studentData.profilePictureURL + '" alt="Author Profile Picture" />';
+                        authorProfilePictureElement.innerHTML = '<strong>Profile Picture:</strong> ' + '<img src="' + studentData.profilePictureURL + '" alt="Author Profile Picture" />';
+                        authorSchoolGradeElement.innerHTML = '<strong>Author School Grade:</strong> ' + studentData.schoolGrade;
                     } else {
                         console.log("No student document found for studentID:", studentID);
                     }
                 }).catch(function (error) {
-                    console.log("Error getting student data:", error);
+                    console.error("Error getting student data for studentID", studentID, ":", error);
                 });
             }
+
 
             //Function call to load comments after getting project details
             loadSpecificComments();
@@ -128,13 +132,13 @@ function loadSpecificComments() {
 
 function loadUserName(userID, commentDiv) {
     // Get user data
-    db.collection("datosUsuarios").doc(userID).get().then(function(userDoc) {
+    db.collection("datosUsuarios").doc(userID).get().then(function (userDoc) {
         const userData = userDoc.data();
         const userName = userData ? userData.usuario : "Anonymous";  // If userName is empty, shows "Anonymous"
         const userElement = document.createElement('div');
         userElement.textContent = "User: " + userName;
         commentDiv.appendChild(userElement);
-    }).catch(function(error) {
+    }).catch(function (error) {
         console.log("Error getting user data:", error);
     });
 }
