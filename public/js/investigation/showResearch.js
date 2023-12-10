@@ -78,25 +78,26 @@ function showAllProjects() {
 
                 // Llamada asíncrona a studentName
                 studentName(doc).then(function (studentName) {
-                    var projectAuthor = document.createElement('div');
-                    projectAuthor.innerHTML = '<strong>Author:</strong> ' + studentName;
-
-                    projectDiv.appendChild(projectTitle);
-                    projectDiv.appendChild(projectAuthor);
-
                     var projectAreaOfInterest = document.createElement('div');
                     projectAreaOfInterest.innerHTML = '<strong>Area of interest:</strong> ' + doc.data().areaOfInterest;
-
-                    projectDiv.appendChild(projectAreaOfInterest);
 
                     var schoolGrade = document.createElement('div');
                     schoolGrade.innerHTML = '<strong>School Grade:</strong> ' + doc.data().schoolGrade;
 
+                    var projectAuthor = document.createElement('div');
+                    projectAuthor.innerHTML = '<strong>Author:</strong> ' + studentName;
+
+                    // Mueve el autor antes del botón "Show more"
+                    projectDiv.appendChild(projectTitle);
+                    projectDiv.appendChild(projectAreaOfInterest);
                     projectDiv.appendChild(schoolGrade);
+                    projectDiv.appendChild(projectAuthor);
 
                     var viewMoreButton = document.createElement('a');
                     viewMoreButton.textContent = 'Show more';
                     viewMoreButton.href = 'researchDetails.html?id=' + doc.id;
+
+                    // Agrega el botón "Show more" al final
                     projectDiv.appendChild(viewMoreButton);
 
                     projectsContainer.appendChild(projectDiv);
@@ -108,6 +109,8 @@ function showAllProjects() {
         });
 }
 
+
+
 // Get the firebase data
 function createProjectDiv(doc) {
     var projectDiv = document.createElement('div');
@@ -115,24 +118,35 @@ function createProjectDiv(doc) {
 
     var projectTitle = document.createElement('h3');
     projectTitle.textContent = doc.data().researchTitle;
-
-    var projectAuthor = document.createElement('div');
-    projectAuthor.innerHTML = '<strong>Author:</strong> ' + studentName(doc);
+    projectDiv.appendChild(projectTitle);
 
     var projectAreaOfInterest = document.createElement('div');
     projectAreaOfInterest.innerHTML = '<strong>Area of interest:</strong> ' + doc.data().areaOfInterest;
-
-    projectDiv.appendChild(projectTitle);
-    projectDiv.appendChild(projectAuthor);
     projectDiv.appendChild(projectAreaOfInterest);
 
-    var viewMoreButton = document.createElement('a');
-    viewMoreButton.textContent = 'Show more';
-    viewMoreButton.href = 'researchDetails.html?id=' + doc.id; // Usar doc.id en lugar de doc.projectID
-    projectDiv.appendChild(viewMoreButton);
+    // Llamada asíncrona a studentName
+    studentName(doc).then(function (studentName) {
+        
+
+        var schoolGrade = document.createElement('div');
+        schoolGrade.innerHTML = '<strong>School Grade:</strong> ' + doc.data().schoolGrade;
+        projectDiv.appendChild(schoolGrade);
+
+        var projectAuthor = document.createElement('div');
+        projectAuthor.innerHTML = '<strong>Author:</strong> ' + studentName;
+        projectDiv.appendChild(projectAuthor);
+
+        var viewMoreButton = document.createElement('a');
+        viewMoreButton.textContent = 'Show more';
+        viewMoreButton.href = 'researchDetails.html?id=' + doc.id;
+        projectDiv.appendChild(viewMoreButton);
+
+        projectsContainer.appendChild(projectDiv);
+    });
 
     return projectDiv;
 }
+
 
 const db = firebase.firestore();
 function studentName(doc) {

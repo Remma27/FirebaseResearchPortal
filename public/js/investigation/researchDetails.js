@@ -32,45 +32,49 @@ function continueLoadInvestigationDetails() {
             var projectData = doc.data();
 
             // Show all research fields
+
+            // 1. Titulo de la investigacion
             var projectTitleElement = document.getElementById("projectTitle");
-            var projectAreaOfInterestElement = document.getElementById("projectAreaOfInterest");
-            var projectStudentIDElement = document.getElementById("projectStudentID");
-            var projectSchoolGradeElement = document.getElementById("projectSchoolGrade");
-            var projectTopicDescriptionElement = document.getElementById("projectTopicDescription");
-            var projectPdfUrlElement = document.getElementById("projectPdfUrl");
-            var projectImagesElement = document.getElementById("projectImages");
-            var projectConclusionsElement = document.getElementById("projectConclusions");
-            var projectFinalRecommendationsElement = document.getElementById("projectFinalRecommendations");
-
             projectTitleElement.textContent = projectData.researchTitle;
+
+            // 2. Area de interes
+            var projectAreaOfInterestElement = document.getElementById("projectAreaOfInterest");
             projectAreaOfInterestElement.innerHTML = '<strong>Area of Interest:</strong> ' + projectData.areaOfInterest;
+
+            // 3. Investigation School Grade
+            var projectSchoolGradeElement = document.getElementById("projectSchoolGrade");
             projectSchoolGradeElement.innerHTML = '<strong>Investigation School Grade:</strong> ' + projectData.schoolGrade;
+
+            // 4. Topic description
+            var projectTopicDescriptionElement = document.getElementById("projectTopicDescription");
             projectTopicDescriptionElement.innerHTML = '<strong>Topic Description:</strong> ' + projectData.topicDescription;
-            projectPdfUrlElement.innerHTML = '<a href="' + projectData.pdfUrl + '" target="_blank"><strong>Click to view the PDF file</strong></a>';
 
-            projectImagesElement.innerHTML = '<strong>Images:</strong> ' + projectData.images.map(imageUrl => `<img src="${imageUrl}" alt="Project Image" />`).join('');
-            projectConclusionsElement.innerHTML = '<strong>Conclusions:</strong> ' + projectData.conclusions;
-            projectFinalRecommendationsElement.innerHTML = '<strong>Final Recommendations:</strong> ' + projectData.finalRecommendations;
-
-            //Student information
+            // Student information
             var studentID = projectData.studentID;
             if (studentID) {
                 db.collection("students").where("studentID", "==", studentID).get().then(function (querySnapshot) {
                     if (!querySnapshot.empty) {
-                        // Si hay resultados, asumiremos que solo hay uno, ya que studentID debería ser único
+                        // Assume only one result, as studentID should be unique
                         var studentDoc = querySnapshot.docs[0];
                         var studentData = studentDoc.data();
 
                         // Show author information
-                        var authorNameElement = document.getElementById("authorName");
-                        var authorAboutMeElement = document.getElementById("authorAboutMe");
-                        var authorProfilePictureElement = document.getElementById("authorProfilePicture");
-                        var authorSchoolGradeElement = document.getElementById("authorSchoolGrade");
 
+                        // 5. Author name
+                        var authorNameElement = document.getElementById("authorName");
                         authorNameElement.innerHTML = '<strong>Author Name:</strong> ' + studentData.fullName;
-                        authorAboutMeElement.innerHTML = '<strong>About Me:</strong> ' + studentData.aboutMe;
+
+                        // 6. Profile picture
+                        var authorProfilePictureElement = document.getElementById("authorProfilePicture");
                         authorProfilePictureElement.innerHTML = '<strong>Profile Picture:</strong> ' + '<img src="' + studentData.profilePictureURL + '" alt="Author Profile Picture" />';
+
+                        // 7. Author School Grade
+                        var authorSchoolGradeElement = document.getElementById("authorSchoolGrade");
                         authorSchoolGradeElement.innerHTML = '<strong>Author School Grade:</strong> ' + studentData.schoolGrade;
+
+                        // 8. About me
+                        var authorAboutMeElement = document.getElementById("authorAboutMe");
+                        authorAboutMeElement.innerHTML = '<strong>About Me:</strong> ' + studentData.aboutMe;
                     } else {
                         console.log("No student document found for studentID:", studentID);
                     }
@@ -79,8 +83,61 @@ function continueLoadInvestigationDetails() {
                 });
             }
 
+            // 9. Click to view the PDF file
+            var projectPdfUrlElement = document.getElementById("projectPdfUrl");
+            projectPdfUrlElement.innerHTML = '<a href="' + projectData.pdfUrl + '" target="_blank"><strong>Click to view the PDF file</strong></a>';
 
-            //Function call to load comments after getting project details
+            // 10. Carrusel de imagenes
+            var projectImagesElement = document.getElementById("projectImages");
+            var carouselInner = document.createElement('div');
+            carouselInner.classList.add('carousel-inner');
+
+            projectData.images.forEach(function (imageUrl, index) {
+                var carouselItem = document.createElement('div');
+                carouselItem.classList.add('carousel-item');
+
+                // La primera imagen será la activa
+                if (index === 0) {
+                    carouselItem.classList.add('active');
+                }
+
+                var imageElement = document.createElement('img');
+                imageElement.src = imageUrl; // La ruta de la imagen
+                imageElement.classList.add('d-block', 'w-100'); // Clases de Bootstrap
+
+                carouselItem.appendChild(imageElement);
+                carouselInner.appendChild(carouselItem);
+            });
+
+            // Botones de control del carrusel
+            var prevButton = document.createElement('button');
+            prevButton.classList.add('carousel-control-prev');
+            prevButton.type = 'button';
+            prevButton.setAttribute('data-bs-target', '#projectImages');
+            prevButton.setAttribute('data-bs-slide', 'prev');
+            prevButton.innerHTML = '<span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span>';
+
+            var nextButton = document.createElement('button');
+            nextButton.classList.add('carousel-control-next');
+            nextButton.type = 'button';
+            nextButton.setAttribute('data-bs-target', '#projectImages');
+            nextButton.setAttribute('data-bs-slide', 'next');
+            nextButton.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span>';
+
+            projectImagesElement.innerHTML = ''; // Limpia el contenido actual
+            projectImagesElement.appendChild(carouselInner);
+            projectImagesElement.appendChild(prevButton);
+            projectImagesElement.appendChild(nextButton);
+
+            // 11. Conclusiones
+            var projectConclusionsElement = document.getElementById("projectConclusions");
+            projectConclusionsElement.innerHTML = '<strong>Conclusions:</strong> ' + projectData.conclusions;
+
+            // 12. Final recomentations
+            var projectFinalRecommendationsElement = document.getElementById("projectFinalRecommendations");
+            projectFinalRecommendationsElement.innerHTML = '<strong>Final Recommendations:</strong> ' + projectData.finalRecommendations;
+
+            // Function call to load comments after getting project details
             loadSpecificComments();
         } else {
             console.log("No such document!");
@@ -89,6 +146,9 @@ function continueLoadInvestigationDetails() {
         console.log("Error getting document:", error);
     });
 }
+
+
+
 
 // Function to load project-specific comments
 function loadSpecificComments() {
@@ -128,7 +188,6 @@ function loadSpecificComments() {
         console.log("Error getting comments:", error);
     });
 }
-
 
 function loadUserName(userID, commentDiv) {
     // Get user data
