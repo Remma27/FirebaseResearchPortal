@@ -1,32 +1,116 @@
-#projectsContainer {
+
+
+.show-more-section {
+    width: 50%;
+    height: 50%;
+    background-color: #fff;
+    padding: 8px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 400px;
+    margin-top: 80px;
+}
+
+
+#authorProfilePicture img {
+    max-width: 300px; /* Tamaño máximo de la imagen */
+    margin-right: 100px;
+ 
+}
+
+
+.show-more-section img {
     max-width: 100%;
-    display: flex;
-    overflow-x: auto;
+    height: auto;
+    margin-bottom: 6px;
+}
+
+.show-more-section > * {
+    margin-bottom: 4px;
+    font-size: 16px; /* Ajusta según tus necesidades */
+}
+
+.show-more-section h3 {
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .project {
-    width: 600px;
-    margin-right: 30px;
+    width: 100%;
+    margin-right: 5px;
     border: 1px solid #ddd;
-    padding: 15px;
+    padding: 6px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #fff;
+    margin-bottom: 20px;
+    margin-left: 5px;
 }
 
 .project > * {
-    margin-bottom: 10px;
+    margin-bottom: 4px;
+}
+
+.project h3 {
+    font-size: 18px;
+    font-weight: bold;
 }
 
 #filterContainer {
-    text-align: left;
-    margin-top: 10px;
-    margin-right: 80%;
-}
-
-#areaFilter {
-    margin-right: 5px;
+    text-align: center;
+    margin-bottom: 8px; /* Ajusta según tus necesidades */
 }
 
 #btnFilter {
     cursor: pointer;
+    display: inline-block;
+    width: 80px; /* Ajusta según tus necesidades */
+    margin-top: 33px; /* Ajusta según tus necesidades */
+}
+
+/* Alinea las imágenes a la izquierda */
+.project img {
+    float: left;
+    margin-right: 10px; /* Espacio entre la imagen y el texto, ajusta según tus necesidades */
+}
+
+/* Resto de tu CSS existente */
+
+#commentsContainer {
+    margin-bottom: 40px; /* Ajusta según tus necesidades */
+}
+
+#commentForm {
+    max-width: 400px; /* Ajusta según tus necesidades */
+    margin: 0 auto; /* Centra el formulario */
+    padding: 20px;
+    background-color: #f8f9fa; /* Fondo gris claro */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 420px;
+}
+
+#commentForm label {
+    font-weight: bold;
+}
+
+#commentText,
+#ratingSelect {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px; /* Espacio entre los elementos */
+}
+
+#btnSaveComment {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff; /* Azul brillante */
+    color: #fff; /* Texto blanco */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#btnSaveComment:hover {
+    background-color: #0056b3; /* Cambio de color al pasar el ratón */
 }

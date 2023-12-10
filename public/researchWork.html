@@ -29,13 +29,24 @@
 
 <main>
     <h4></h4>
-
-    <div id="filterContainer">
-        <label for="areaInput">Filter by Area of Interest:</label>
-        <input type="text" id="areaInput" placeholder="Type Area of Interest"/>
-        <label for="schoolGradeInput">Filter by School Grade:</label>
-        <input type="text" id="schoolGradeInput" placeholder="Type School Grade"/>
-    </div>    
+    <div id="filterContainer" class="my-4 container text-center">
+        <div class="row g-2">
+            <div class="col-md-5">
+                <label for="areaInput" class="form-label">Filter by Area of Interest:</label>
+                <input type="text" class="form-control" id="areaInput" placeholder="Type Area of Interest" />
+            </div>
+            <div class="col-md-5">
+                <label for="schoolGradeInput" class="form-label">Filter by School Grade:</label>
+                <input type="text" class="form-control" id="schoolGradeInput" placeholder="Type School Grade" />
+            </div>
+            <div class="col-md-2">
+                <button type="button" class="btn btn-primary" id="btnFilter">Filter</button>
+            </div>
+        </div>
+    </div>
+    
+    
+       
     <br/>
     <div id="projectsContainer">
         
