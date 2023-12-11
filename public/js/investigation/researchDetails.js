@@ -10,7 +10,7 @@ var currentUserID;
 function loadInvestigationDetails() {
     var projectDetailsContainer = document.getElementById("projectDetails");
 
-    //Get the ID of the authenticated user
+    // Get the ID of the authenticated user
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             currentUserID = user.uid;
@@ -19,7 +19,7 @@ function loadInvestigationDetails() {
             continueLoadInvestigationDetails();
         }
 
-        //Continue loading details after getting the user ID
+        // Continue loading details after getting the user ID
         continueLoadInvestigationDetails();
     });
 }
@@ -33,11 +33,11 @@ function continueLoadInvestigationDetails() {
 
             // Show all research fields
 
-            // 1. Titulo de la investigacion
+            // 1. Investigation Title
             var projectTitleElement = document.getElementById("projectTitle");
             projectTitleElement.textContent = projectData.researchTitle;
 
-            // 2. Area de interes
+            // 2. Area of Interest
             var projectAreaOfInterestElement = document.getElementById("projectAreaOfInterest");
             projectAreaOfInterestElement.innerHTML = '<strong>Area of Interest:</strong> ' + projectData.areaOfInterest;
 
@@ -45,7 +45,7 @@ function continueLoadInvestigationDetails() {
             var projectSchoolGradeElement = document.getElementById("projectSchoolGrade");
             projectSchoolGradeElement.innerHTML = '<strong>Investigation School Grade:</strong> ' + projectData.schoolGrade;
 
-            // 4. Topic description
+            // 4. Topic Description
             var projectTopicDescriptionElement = document.getElementById("projectTopicDescription");
             projectTopicDescriptionElement.innerHTML = '<strong>Topic Description:</strong> ' + projectData.topicDescription;
 
@@ -72,7 +72,7 @@ function continueLoadInvestigationDetails() {
                         var authorSchoolGradeElement = document.getElementById("authorSchoolGrade");
                         authorSchoolGradeElement.innerHTML = '<strong>Author School Grade:</strong> ' + studentData.schoolGrade;
 
-                        // 8. About me
+                        // 8. About Me
                         var authorAboutMeElement = document.getElementById("authorAboutMe");
                         authorAboutMeElement.innerHTML = '<strong>About Me:</strong> ' + studentData.aboutMe;
                     } else {
@@ -87,7 +87,7 @@ function continueLoadInvestigationDetails() {
             var projectPdfUrlElement = document.getElementById("projectPdfUrl");
             projectPdfUrlElement.innerHTML = '<a href="' + projectData.pdfUrl + '" target="_blank"><strong>Click to view the PDF file</strong></a>';
 
-            // 10. Carrusel de imagenes
+            // 10. Image Carousel
             var projectImagesElement = document.getElementById("projectImages");
             var carouselInner = document.createElement('div');
             carouselInner.classList.add('carousel-inner');
@@ -96,20 +96,20 @@ function continueLoadInvestigationDetails() {
                 var carouselItem = document.createElement('div');
                 carouselItem.classList.add('carousel-item');
 
-                // La primera imagen será la activa
+                // The first image will be active
                 if (index === 0) {
                     carouselItem.classList.add('active');
                 }
 
                 var imageElement = document.createElement('img');
-                imageElement.src = imageUrl; // La ruta de la imagen
-                imageElement.classList.add('d-block', 'w-100'); // Clases de Bootstrap
+                imageElement.src = imageUrl; // Image path
+                imageElement.classList.add('d-block', 'w-100'); // Bootstrap classes
 
                 carouselItem.appendChild(imageElement);
                 carouselInner.appendChild(carouselItem);
             });
 
-            // Botones de control del carrusel
+            // Carousel control buttons
             var prevButton = document.createElement('button');
             prevButton.classList.add('carousel-control-prev');
             prevButton.type = 'button';
@@ -124,16 +124,16 @@ function continueLoadInvestigationDetails() {
             nextButton.setAttribute('data-bs-slide', 'next');
             nextButton.innerHTML = '<span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span>';
 
-            projectImagesElement.innerHTML = ''; // Limpia el contenido actual
+            projectImagesElement.innerHTML = ''; // Clear current content
             projectImagesElement.appendChild(carouselInner);
             projectImagesElement.appendChild(prevButton);
             projectImagesElement.appendChild(nextButton);
 
-            // 11. Conclusiones
+            // 11. Conclusions
             var projectConclusionsElement = document.getElementById("projectConclusions");
             projectConclusionsElement.innerHTML = '<strong>Conclusions:</strong> ' + projectData.conclusions;
 
-            // 12. Final recomentations
+            // 12. Final Recommendations
             var projectFinalRecommendationsElement = document.getElementById("projectFinalRecommendations");
             projectFinalRecommendationsElement.innerHTML = '<strong>Final Recommendations:</strong> ' + projectData.finalRecommendations;
 
@@ -147,14 +147,11 @@ function continueLoadInvestigationDetails() {
     });
 }
 
-
-
-
 // Function to load project-specific comments
 function loadSpecificComments() {
     var commentsContainer = document.getElementById("commentsContainer");
 
-    //Get comments related to the project ID
+    // Get comments related to the project ID
     db.collection("comments").where("projectID", "==", projectID).get().then((querySnapshot) => {
         commentsContainer.innerHTML = "";
 
@@ -191,9 +188,9 @@ function loadSpecificComments() {
 
 function loadUserName(userID, commentDiv) {
     // Get user data
-    db.collection("datosUsuarios").doc(userID).get().then(function (userDoc) {
+    db.collection("userDetails").doc(userID).get().then(function (userDoc) {
         const userData = userDoc.data();
-        const userName = userData ? userData.usuario : "Anonymous";  // If userName is empty, shows "Anonymous"
+        const userName = userData ? userData.username : "Anonymous"; // If userName is empty, show "Anonymous"
         const userElement = document.createElement('div');
         userElement.textContent = "User: " + userName;
         commentDiv.appendChild(userElement);
@@ -202,5 +199,5 @@ function loadUserName(userID, commentDiv) {
     });
 }
 
-// Function for load details to load the page
+// Function to load details and populate the page
 loadInvestigationDetails();
