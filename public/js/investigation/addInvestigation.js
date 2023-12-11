@@ -135,8 +135,6 @@ btnSaveProject.addEventListener('click', function (event) {
     }
 });
 
-// Rest of the code...
-
 
 // Function to clear form fields
 function clearFormFields() {
