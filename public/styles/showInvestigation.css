@@ -1,5 +1,4 @@
 
-
 .show-more-section {
     width: 50%;
     height: 50%;
@@ -7,8 +6,8 @@
     padding: 8px;
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-right: 400px;
-    margin-top: 80px;
+    margin-right: 100px;
+    margin-top: 70px;
 }
 
 
@@ -35,37 +34,7 @@
     font-weight: bold;
 }
 
-.project {
-    width: 100%;
-    margin-right: 5px;
-    border: 1px solid #ddd;
-    padding: 6px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    margin-bottom: 20px;
-    margin-left: 5px;
-}
 
-.project > * {
-    margin-bottom: 4px;
-}
-
-.project h3 {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-#filterContainer {
-    text-align: center;
-    margin-bottom: 8px; /* Ajusta según tus necesidades */
-}
-
-#btnFilter {
-    cursor: pointer;
-    display: inline-block;
-    width: 80px; /* Ajusta según tus necesidades */
-    margin-top: 33px; /* Ajusta según tus necesidades */
-}
 
 /* Alinea las imágenes a la izquierda */
 .project img {
@@ -76,18 +45,18 @@
 /* Resto de tu CSS existente */
 
 #commentsContainer {
-    margin-bottom: 40px; /* Ajusta según tus necesidades */
+    padding-top: 100px;
+    margin-bottom: 400px;
 }
 
 #commentForm {
     max-width: 400px; /* Ajusta según tus necesidades */
-    margin: 0 auto; /* Centra el formulario */
     padding: 20px;
     background-color: #f8f9fa; /* Fondo gris claro */
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 420px;
+   margin-bottom: 20%;
 }
 
 #commentForm label {
@@ -113,4 +82,50 @@
 
 #btnSaveComment:hover {
     background-color: #0056b3; /* Cambio de color al pasar el ratón */
+}
+
+.project {
+    width: 53%;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid #ddd;
+    padding: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin-bottom: 20px;
+    
+
+}
+
+/* Estilo adicional para el contenido si es un texto */
+.project p {
+    margin: 0; /* Elimina el margen predeterminado del párrafo si lo hay */
+}
+
+.project h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#filterContainer {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.filterItem {
+    display: inline-block;
+    margin-bottom: 2rem; /* Ajusta el espacio entre elementos según tus necesidades */
+}
+
+#areaFilter {
+    margin-right: 3.5rem; /* Margen derecho para el primer elemento */
+}
+
+#gradeFilter {
+    margin-left: 3.6rem; /* Margen izquierdo para el segundo elemento */
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
 }
