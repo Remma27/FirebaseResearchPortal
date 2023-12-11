@@ -15,11 +15,16 @@ const form = document.querySelector('#studentForm');
 btnSaveData.addEventListener('click', function (event) {
     event.preventDefault();
 
+    // Input validation
+    if (!validateForm()) {
+        return;
+    }
+
     // Get selected image file
     const archivo = txtprofilePictureURL.files[0];
 
     // Check if an image is selected
-    if (archivo == null) {
+    if (!archivo) {
         alert('You must select an image');
     } else {
         // Metadata for the image file
@@ -42,24 +47,71 @@ btnSaveData.addEventListener('click', function (event) {
                 "aboutMe": txtaboutMe.value,
                 "profilePictureURL": url,
             }).then(function () {
-                alert("Student Added Successfully" + studentID);
-                limpiar(); // Clear form fields
+                alert("Student Added Successfully: " + studentID);
+                clearFormFields(); // Clear form fields
             }).catch(function (FirebaseError) {
-                alert("Error adding the document:" + FirebaseError.message);
+                alert("Error adding the document: " + FirebaseError.message);
             });
         }).catch(function (FirebaseError) {
-            alert("Error getting the URL of the image:" + FirebaseError.message);
+            alert("Error getting the URL of the image: " + FirebaseError.message);
         });
     }
 });
 
 // Function to clear form fields
-function limpiar() {
+function clearFormFields() {
     txtStudentID.value = '';
     txtfullName.value = '';
     txtschoolGrade.value = '';
     txtaboutMe.value = '';
     txtprofilePictureURL.value = '';
-    form.reset(); // Reset form
+
+    if (form) {
+        form.reset(); // Reset form
+    } else {
+        console.error('Form element is null. Unable to reset.');
+    }
+
     txtfullName.focus(); // Set focus to the Full Name input
+}
+
+// Function to validate form inputs
+function validateForm() {
+    // Validation for Student ID
+    const studentID = txtStudentID.value.trim();
+    if (!/^\d{9}$/.test(studentID)) {
+        alert('Please enter a valid 9-digit Student ID.');
+        return false;
+    }
+
+    // Validation for Full Name
+    const fullName = txtfullName.value.trim();
+    if (!fullName) {
+        alert('Please enter a valid Full Name.');
+        return false;
+    }
+
+    // Validation for School Grade
+    const schoolGrade = txtschoolGrade.value.trim();
+    if (!schoolGrade) {
+        alert('Please enter a valid School Grade.');
+        return false;
+    }
+
+    // Validation for About Me
+    const aboutMe = txtaboutMe.value.trim();
+    if (!aboutMe) {
+        alert('Please enter a valid About Me.');
+        return false;
+    }
+
+    // Validation for Profile Picture
+    const profilePictureFiles = txtprofilePictureURL.files;
+    if (!profilePictureFiles || profilePictureFiles.length !== 1) {
+        alert('Please select exactly one profile picture.');
+        return false;
+    }
+
+    // All validations passed
+    return true;
 }
