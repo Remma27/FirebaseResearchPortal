@@ -110,3 +110,4 @@ function clearForm() {
 
 // Load comments associated with the current project on page load
 loadComments();
+
