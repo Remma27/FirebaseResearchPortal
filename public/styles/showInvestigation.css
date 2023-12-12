@@ -1,110 +1,118 @@
+body {
+    background-color: #f8f9fa;
+    margin-top: 20px; /* Add margin to the top of the body */
+    margin-bottom: 20px; /* Add margin to the bottom of the body */
+    padding-top: 8rem!important;
+    padding-bottom: 10rem!important;
+}
 
+
+.py-5 {
+    padding-top: 8rem!important;
+    padding-bottom: 10rem!important;
+}
+
+.my-4 {
+    margin-top: 8.5rem!important;
+    margin-bottom: 1.5rem!important;
+}
 .show-more-section {
     width: 50%;
     height: 50%;
     background-color: #fff;
-    padding: 8px;
+    padding: 20px; /* Increased padding for better spacing */
     border: 1px solid #ddd;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-right: 100px;
     margin-top: 70px;
 }
 
-
 #authorProfilePicture img {
-    max-width: 300px; /* Tamaño máximo de la imagen */
-    margin-right: 100px;
- 
+    max-width: 300px;
+    margin-right: 20px; /* Reduced margin for better spacing */
 }
-
 
 .show-more-section img {
     max-width: 100%;
     height: auto;
-    margin-bottom: 6px;
+    margin-bottom: 12px; /* Increased margin for better spacing */
 }
 
 .show-more-section > * {
-    margin-bottom: 4px;
-    font-size: 16px; /* Ajusta según tus necesidades */
+    margin-bottom: 8px; /* Adjusted margin for better spacing */
+    font-size: 16px;
 }
 
 .show-more-section h3 {
     font-size: 18px;
     font-weight: bold;
+    margin-bottom: 10px; /* Increased margin for better spacing */
 }
 
-
-
-/* Alinea las imágenes a la izquierda */
 .project img {
     float: left;
-    margin-right: 10px; /* Espacio entre la imagen y el texto, ajusta según tus necesidades */
+    margin-right: 15px;
 }
 
-/* Resto de tu CSS existente */
-
 #commentsContainer {
-    padding-top: 100px;
-    margin-bottom: 400px;
+    padding-top: 50px; /* Adjusted padding for better spacing */
+    margin-bottom: 20px; /* Adjusted margin for better spacing */
 }
 
 #commentForm {
-    max-width: 400px; /* Ajusta según tus necesidades */
+    max-width: 400px;
     padding: 20px;
-    background-color: #f8f9fa; /* Fondo gris claro */
+    background-color: #f8f9fa;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-   margin-bottom: 20%;
+    margin-bottom: 20px; /* Adjusted margin for better spacing */
 }
 
 #commentForm label {
     font-weight: bold;
+    margin-bottom: 8px; /* Increased margin for better spacing */
 }
 
 #commentText,
 #ratingSelect {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 12px; /* Espacio entre los elementos */
+    padding: 10px;
+    margin-bottom: 12px;
 }
 
 #btnSaveComment {
     width: 100%;
     padding: 10px;
-    background-color: #007bff; /* Azul brillante */
-    color: #fff; /* Texto blanco */
+    background-color: #007bff;
+    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
 #btnSaveComment:hover {
-    background-color: #0056b3; /* Cambio de color al pasar el ratón */
+    background-color: #0056b3;
 }
 
 .project {
-    width: 53%;
-    margin-right: auto;
-    margin-left: auto;
+    width: 70%; /* Adjusted width for better spacing */
+    margin: 0 auto;
     border: 1px solid #ddd;
-    padding: 6px;
+    padding: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     margin-bottom: 20px;
-    
-
 }
 
-/* Estilo adicional para el contenido si es un texto */
 .project p {
-    margin: 0; /* Elimina el margen predeterminado del párrafo si lo hay */
+    margin: 0;
 }
 
 .project h3 {
     font-size: 18px;
     font-weight: bold;
+    margin-bottom: 10px; /* Increased margin for better spacing */
 }
 
 #filterContainer {
@@ -114,15 +122,15 @@
 
 .filterItem {
     display: inline-block;
-    margin-bottom: 2rem; /* Ajusta el espacio entre elementos según tus necesidades */
+    margin-bottom: 2rem;
 }
 
 #areaFilter {
-    margin-right: 3.5rem; /* Margen derecho para el primer elemento */
+    margin-right: 2rem; /* Adjusted margin for better spacing */
 }
 
 #gradeFilter {
-    margin-left: 3.6rem; /* Margen izquierdo para el segundo elemento */
+    margin-left: 2rem; /* Adjusted margin for better spacing */
 }
 
 .form-label {
